@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html manifest="myapp.appcache">
+<html>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"></meta>
+    <link rel="stylesheet" tytpe="text/css" href="./style/map.css"></link>
+    <script type="text/javascript" src="./js/util.js"></script>
+    <script type="text/javascript" src="./js/weather.js"></script>
+    <script type="text/javascript" src="./js/map.js"></script>
+		<script type="text/javascript">
+		  /*To install the applciation automatically*/
+		  if (navigator.mozApps !== undefined){
+		    if (typeof navigator.mozApps.install === "function" && 
+						typeof navigator.mozApps.getInstalled === "function"){
+
+				  window.addEventListener("load", function(){
+					  /*Check first if the application is installed before*/
+						var request = navigator.mozApps.getInstalled();
+						request.onerror = function(){dump("<TZM_LOG>Error calling mozApps.getInsatalled");};
+						request.onsuccess = function(){
+						  if (request.result.every(function(app){
+                    return (app.origin.indexOf("hellotang") === -1);
+									})){
+                /*Application not installed, then install it*/ 
+					      setTimeout(function(){
+							    
+								var installReq = navigator.mozApps.install("http://hellotang.sinaapp.com/manifest.webapp");
+								installReq.onerror = function(){dump("<TZM_LOG>Error on installing the application");}
+								installReq.onsuccess = function(){dump("<TZM_LOG>Successfully install the hellotang"+this.error.name);}
+									},2000);
+					  	}
+				  	}
+					});
+				}
+				else{
+				  console.log("<TZM_LOG>Not able to install the application to Mozilla B2G device");
+				}
+			}
+      else{
+		    console.log("<TZM_LOG>Not run in Mozilla B2G scenario");
+	  	}
+		</script>
+  </head>
+  <body>
+    <table id="weather_info">
+      <tr id="weather_day"></tr>
+      <tr id="weather_icon"></tr>
+      <tr id="weather_txt"></tr>
+      <tr id="weather_temp"></tr>
+    </table>
+    <div id="map_canvas"></div>
+  </body>
+</html>

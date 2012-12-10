@@ -1,0 +1,14 @@
+{
+  "version": "0.1",
+  "name": "tzmapp",
+  "description": "Just a trial for google map and JSONP!",
+  "icons": {
+    "128": "/Blank.png"
+  },
+  "developer": {
+    "name": "tzm"
+  },
+  "installs_allowed_from": ["*"],
+  "appcache_path": "/myapp.appcache",
+  "default_locale": "en"
+}
